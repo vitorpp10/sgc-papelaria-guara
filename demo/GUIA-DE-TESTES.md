@@ -10,7 +10,7 @@
 
 ## Fluxo de Testes Completo
 
-### 1️⃣ **TESTE 1: Criar Utilizador (Registro)**
+### ️**TESTE 1: Criar Utilizador (Registro)**
 
 **Comando:**
 ```bash
@@ -32,7 +32,7 @@ curl -X POST http://localhost:8080/api/auth/register \
 
 ---
 
-### 2️⃣ **TESTE 2: Login e Obter Token JWT**
+###  **TESTE 2: Login e Obter Token JWT**
 
 **Comando:**
 ```bash
@@ -52,11 +52,11 @@ curl -X POST http://localhost:8080/api/auth/login \
 }
 ```
 
-**⚠️ Guardar o token acima para usar nos próximos testes!**
+**guardar o token acima para usar nos próximos testes!**
 
 ---
 
-### 3️⃣ **TESTE 3: Criar Cliente (com Token)**
+### **TESTE 3: Criar Cliente (com Token)**
 
 **Comando:**
 ```bash
@@ -85,7 +85,7 @@ curl -X POST http://localhost:8080/api/clientes \
 
 ---
 
-### 4️⃣ **TESTE 4: Criar Produto**
+### **TESTE 4: Criar Produto**
 
 **Comando:**
 ```bash
@@ -114,7 +114,7 @@ curl -X POST http://localhost:8080/api/produtos \
 
 ---
 
-### 5️⃣ **TESTE 5: Listar Clientes**
+### **TESTE 5: Listar Clientes**
 
 **Comando:**
 ```bash
@@ -138,7 +138,7 @@ curl -X GET http://localhost:8080/api/clientes \
 
 ---
 
-### 6️⃣ **TESTE 6: Listar Produtos**
+### **TESTE 6: Listar Produtos**
 
 **Comando:**
 ```bash
@@ -162,7 +162,7 @@ curl -X GET http://localhost:8080/api/produtos \
 
 ---
 
-### 7️⃣ **TESTE 7: Buscar Cliente por ID**
+### **TESTE 7: Buscar Cliente por ID**
 
 **Comando:**
 ```bash
@@ -184,7 +184,7 @@ curl -X GET http://localhost:8080/api/clientes/1 \
 
 ---
 
-### 8️⃣ **TESTE 8: Atualizar Cliente**
+### **TESTE 8: Atualizar Cliente**
 
 **Comando:**
 ```bash
@@ -213,7 +213,7 @@ curl -X PUT http://localhost:8080/api/clientes/1 \
 
 ---
 
-### 9️⃣ **TESTE 9: Apagar Cliente**
+###  **TESTE 9: Apagar Cliente**
 
 **Comando:**
 ```bash
@@ -228,7 +228,7 @@ curl -X DELETE http://localhost:8080/api/clientes/1 \
 
 ---
 
-## ⚠️ Erros Comuns e Respostas
+##  Erros Comuns e Respostas
 
 **Erro: Não Autorizado (HTTP 401)**
 ```json
@@ -257,11 +257,11 @@ curl -X DELETE http://localhost:8080/api/clientes/1 \
 
 ---
 
-## 👥 2. CRUD DE CLIENTES
+##  2. CRUD DE CLIENTES
 
 Use o **token obtido no login** em todos os requests abaixo.
 
-### 2.1️⃣ Criar Cliente
+### 2. Criar Cliente
 
 **Endpoint**: `POST http://localhost:8080/clientes`
 
@@ -310,7 +310,7 @@ Content-Type: application/json
 
 ---
 
-### 2.2️⃣ Listar Todos os Clientes
+### 2. Listar Todos os Clientes
 
 **Endpoint**: `GET http://localhost:8080/clientes`
 
@@ -335,7 +335,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 ---
 
-### 2.3️⃣ Obter Cliente por ID
+### 2.️ Obter Cliente por ID
 
 **Endpoint**: `GET http://localhost:8080/clientes/1`
 
@@ -365,7 +365,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 ---
 
-### 2.4️⃣ Atualizar Cliente
+### 2. Atualizar Cliente
 
 **Endpoint**: `PUT http://localhost:8080/clientes/1`
 
@@ -390,7 +390,7 @@ Content-Type: application/json
 
 ---
 
-### 2.5️⃣ Deletar Cliente
+### 2. Deletar Cliente
 
 **Endpoint**: `DELETE http://localhost:8080/clientes/1`
 
@@ -403,9 +403,9 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 ---
 
-## 📦 3. CRUD DE PRODUTOS
+##  3. CRUD DE PRODUTOS
 
-### 3.1️⃣ Criar Produto
+### 3. Criar Produto
 
 **Endpoint**: `POST http://localhost:8080/produtos`
 
@@ -445,7 +445,7 @@ Content-Type: application/json
 
 ---
 
-### 3.2️⃣ Listar Todos os Produtos
+### 3. Listar Todos os Produtos
 
 **Endpoint**: `GET http://localhost:8080/produtos`
 
@@ -456,7 +456,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 ---
 
-### 3.3️⃣ Obter Produto por ID
+### 3. Obter Produto por ID
 
 **Endpoint**: `GET http://localhost:8080/produtos/1`
 
@@ -467,7 +467,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 ---
 
-### 3.4️⃣ Atualizar Produto
+### 3. Atualizar Produto
 
 **Endpoint**: `PUT http://localhost:8080/produtos/1`
 
@@ -481,7 +481,7 @@ Content-Type: application/json
 
 ---
 
-### 3.5️⃣ Deletar Produto
+### 3. Deletar Produto
 
 **Endpoint**: `DELETE http://localhost:8080/produtos/1`
 
@@ -492,7 +492,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9...
 
 ---
 
-## 🔒 4. ERROS DE AUTENTICAÇÃO
+##  4. ERROS DE AUTENTICAÇÃO
 
 ### Sem Token
 
@@ -521,7 +521,7 @@ Access Denied
 
 ---
 
-## 📋 5. VALIDAÇÕES DE ENTRADA (DTO)
+##  5. VALIDAÇÕES DE ENTRADA (DTO)
 
 ### Cliente - Campos Obrigatórios
 
@@ -544,7 +544,7 @@ Access Denied
 
 ---
 
-## 🛠️ 6. USANDO COM POSTMAN/INSOMNIA
+##  6. USANDO COM POSTMAN/INSOMNIA
 
 ### Salvar Token como Variável (Automático)
 
@@ -563,7 +563,7 @@ Authorization: Bearer {{token}}
 
 ---
 
-## ✅ Checklist de Testes
+##  Checklist de Testes
 
 - [ ] Login com usuário válido → Token recebido
 - [ ] Login com credenciais inválidas → 401
@@ -582,7 +582,7 @@ Authorization: Bearer {{token}}
 
 ---
 
-## 📱 Exemplo com cURL (Terminal)
+##  Exemplo com cURL (Terminal)
 
 ```bash
 # 1. Login
@@ -611,5 +611,5 @@ curl -X GET http://localhost:8080/clientes \
 
 ---
 
-**Status**: ✅ Todos os testes devem passar sem erros  
+**Status**: Todos os testes devem passar sem erros  
 **Última atualização**: 20 de maio de 2026
