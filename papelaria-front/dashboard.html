@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGC Papelaria Guará - Painel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar { margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1 fw-bold text-primary">Papelaria Guará SGC</span>
+        <div class="d-flex align-items-center">
+            <span class="text-light me-3">Olá, <strong id="nomeUsuario">Usuário</strong></span>
+            <button class="btn btn-outline-danger btn-sm" onclick="logout()">Sair</button>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active fw-bold" id="clientes-tab" data-bs-toggle="tab" data-bs-target="#clientes-pane" type="button">Gerenciar Clientes</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link fw-bold" id="produtos-tab" data-bs-toggle="tab" data-bs-target="#produtos-pane" type="button">Gerenciar Produtos</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link fw-bold" id="vendas-tab" data-bs-toggle="tab" data-bs-target="#vendas-pane" type="button">PDV (Ponto de Venda)</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link fw-bold" id="relatorios-tab" data-bs-toggle="tab" data-bs-target="#relatorios-pane" type="button">Relatórios</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        
+        <div class="tab-pane fade show active" id="clientes-pane">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Lista de Clientes</h3>
+                <button class="btn btn-primary" onclick="abrirModalCadastroCliente()">+ Novo Cliente</button>
+            </div>
+            <div class="card p-3 shadow-sm">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th><th>Nome</th><th>CPF</th><th>E-mail</th><th>Telefone</th><th>Endereço</th><th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaClientes"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="produtos-pane">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Lista de Produtos</h3>
+                <button class="btn btn-primary" onclick="abrirModalCadastroProduto()">+ Novo Produto</button>
+            </div>
+            <div class="card p-3 shadow-sm">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th><th>Nome</th><th>Descrição</th><th>Preço</th><th>Estoque</th><th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaProdutos"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="vendas-pane">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Registrar Venda</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="card p-3 shadow-sm mb-3">
+                        <h5>Adicionar Produtos</h5>
+                        <div class="row g-2 align-items-end">
+                            <div class="col-md-6">
+                                <label class="form-label">Produto</label>
+                                <select id="vendaProdutoSelect" class="form-select"></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Quantidade</label>
+                                <input type="number" id="vendaQuantidade" class="form-control" value="1" min="1">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success w-100" onclick="adicionarItemCarrinho()">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card p-3 shadow-sm">
+                        <h5>Selecione o Cliente</h5>
+                        <select id="vendaClienteSelect" class="form-select"></select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="card p-3 shadow-sm bg-light">
+                        <h5>Carrinho</h5>
+                        <ul id="listaCarrinho" class="list-group mb-3" style="max-height: 250px; overflow-y: auto;">
+                            <!-- Itens do carrinho aparecerão aqui -->
+                        </ul>
+                        <div class="d-flex justify-content-between fs-4 fw-bold mb-3">
+                            <span>Total:</span>
+                            <span id="valorTotalVenda">R$ 0,00</span>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100" onclick="finalizarVenda()">Finalizar Venda</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="relatorios-pane">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3>Relatório de Vendas</h3>
+            </div>
+            <div class="card p-3 shadow-sm mb-3">
+                <form id="formRelatorio" class="row g-3 align-items-end" onsubmit="gerarRelatorio(event)">
+                    <div class="col-md-4">
+                        <label class="form-label">Data Início</label>
+                        <input type="date" id="relatorioInicio" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Data Fim</label>
+                        <input type="date" id="relatorioFim" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100">Gerar Relatório</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card p-3 shadow-sm">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th><th>Data</th><th>Cliente</th><th>Vendedor</th><th>Produtos</th><th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaRelatorio"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="modalCliente" tabindex="-1">
+    <div class="modal-content modal-dialog">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalClienteTitulo">Cadastrar Cliente</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formCliente">
+            <div class="modal-body">
+                <input type="hidden" id="clienteId">
+                <div class="mb-3">
+                    <label class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="clienteNome" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="clienteCpf" required placeholder="Apenas números">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="clienteEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telefone</label>
+                    <input type="text" class="form-control" id="clienteTelefone" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Endereço</label>
+                    <input type="text" class="form-control" id="clienteEndereco" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="modalProduto" tabindex="-1">
+    <div class="modal-content modal-dialog">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalProdutoTitulo">Cadastrar Produto</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="formProduto">
+            <div class="modal-body">
+                <input type="hidden" id="produtoId">
+                <div class="mb-3">
+                    <label class="form-label">Nome do Produto</label>
+                    <input type="text" class="form-control" id="produtoNome" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descrição</label>
+                    <textarea class="form-control" id="produtoDescricao" rows="2"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Preço (R$)</label>
+                    <input type="number" step="0.01" class="form-control" id="produtoPreco" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Quantidade em Estoque</label>
+                    <input type="number" class="form-control" id="produtoEstoque" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
