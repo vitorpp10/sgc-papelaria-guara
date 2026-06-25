@@ -1,17 +1,17 @@
 # SGC - Sistema de Gestão Comercial (Papelaria Guará)
 
-## Entrega 2 - Implementação da API
+## Entrega 3 - Sistema Completo
 
-Este projeto consiste na implementação completa de uma API REST desenvolvida com Spring Boot, utilizando autenticação JWT, controle de acesso por funções, operações de CRUD para clientes e produtos, além de tratamento global de exceções.
+Este projeto consiste na implementação completa de uma API REST desenvolvida com Spring Boot e um frontend em HTML/JS com Bootstrap. A aplicação possui autenticação JWT, controle de acesso, operações de CRUD para clientes e produtos, **registro de vendas com controle de estoque e relatórios de vendas**, além de tratamento global de exceções.
 
 ---
 
 ## Rubrica Atendida
 
 ### 1. Modelo de Dados
-* 3 entidades mapeadas: Cliente, Produto e Usuario
-* 3 repositórios Spring Data JPA
-* Relacionamentos e validações de dados configuradas
+* 5 entidades mapeadas: Cliente, Produto, Usuario, Venda e ItemVenda
+* 5 repositórios Spring Data JPA
+* Relacionamentos 1:N e N:1 (Venda <-> ItemVenda) e validações de dados configuradas
 
 ### 2. Controle de Acesso
 * Autenticação via JWT com Spring Security
@@ -19,9 +19,10 @@ Este projeto consiste na implementação completa de uma API REST desenvolvida c
 * Endpoints protegidos de acordo com o perfil do usuário
 
 ### 3. API REST
-* 6 endpoints principais cobrindo os métodos POST, GET, PUT e DELETE
+* Endpoints cobrindo os métodos POST, GET, PUT e DELETE
 * CRUD funcional para o gerenciamento de clientes e produtos
 * Endpoints para registro e login de usuários
+* **Endpoints de Vendas (PDV) e Geração de Relatórios por período**
 
 ### 4. Tratamento de Erros
 * 3 exceções customizadas para regras de negócio e busca
@@ -135,6 +136,12 @@ http://localhost:8080
 * `PUT /api/produtos/{id}` - atualizar dados do produto (requer token)
 * `DELETE /api/produtos/{id}` - remover produto do sistema (requer token)
 
+### Vendas
+
+* `POST /api/vendas` - registrar uma nova venda e abater estoque (requer token)
+* `GET /api/vendas` - listar todas as vendas (requer token)
+* `GET /api/vendas/relatorio?inicio=YYYY-MM-DD&fim=YYYY-MM-DD` - gerar relatório de vendas em um período (requer token)
+
 ---
 
 ## Configuração do Banco de Dados
@@ -188,5 +195,6 @@ curl -X POST http://localhost:8080/api/clientes \
 
 * Bloqueio de cadastros com CPF duplicado lançando exceção personalizada
 * Impedimento de cadastro de produtos com preço menor que zero
+* **Controle de Estoque:** Não permite a venda se a quantidade do produto for insuficiente, e abate do estoque automaticamente na finalização da venda.
 * Validação de formato de e-mail e verificação de campos obrigatórios via anotações do Jakarta Validation
 * Retorno padronizado em JSON para qualquer erro interceptado pelo handler global

@@ -2,6 +2,7 @@ package br.com.sgc.service;
 
 import br.com.sgc.domain.model.Cliente;
 import br.com.sgc.domain.repository.ClienteRepository;
+import br.com.sgc.domain.repository.VendaRepository;
 import br.com.sgc.dto.ClienteDTO;
 import br.com.sgc.exception.BusinessException;
 import br.com.sgc.exception.ResourceNotFoundException;
@@ -13,9 +14,11 @@ import java.util.List;
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final VendaRepository vendaRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, VendaRepository vendaRepository) {
         this.clienteRepository = clienteRepository;
+        this.vendaRepository = vendaRepository;
     }
 
     public List<Cliente> obterTodos() {
@@ -56,6 +59,12 @@ public class ClienteService {
 
     public void deletar(Long id) {
         obterPorId(id);
+        
+        // Regra de Negócio: Cliente não pode ser removido se possuir vendas registradas
+        if (vendaRepository.existsByClienteId(id)) {
+            throw new BusinessException("Cliente não pode ser removido pois possui vendas registradas.");
+        }
+        
         clienteRepository.deleteById(id);
     }
 }
